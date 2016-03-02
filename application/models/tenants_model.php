@@ -14,7 +14,7 @@ class Tenants_model extends CI_Model
     public function get_rent($email)
     {
 
-        $blocks = "SELECT block_name  FROM tenants WHERE email ='" . $email . "'";
+        $blocks = "SELECT block_name FROM tenants WHERE email ='" . $email . "'";
         $units = "SELECT unitname  FROM tenants WHERE email ='" . $email . "'";
         $blockname = $this->db->query($blocks)->result_array();
         $unitname = $this->db->query($units)->result_array();
@@ -24,5 +24,25 @@ class Tenants_model extends CI_Model
         return $this->db->query($query)->result_array();
 
     }
+
+     public function get_rent_due($email)
+    {
+
+        $rent_balance = "SELECT rent_balance FROM rent_details WHERE email ='" . $email . "'";
+        return $this->db->query($rent_balance)->result_array();
+        
+
+    }
+     public function get_rent_due_date($email)
+    {
+
+        $rent_due_date = "SELECT rent_due_date FROM rent_details WHERE email ='" . $email . "'";
+        return $this->db->query($rent_due_date)->result_array();;
+       
+
+    }
+
+
+
 
 }

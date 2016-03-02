@@ -63,6 +63,9 @@ class Admins extends CI_Controller {
             );
             $this->load->library('session');
             $this->session->set_userdata($data);
+            $this->load->model('payments_model');
+            $date = date("Y-m-d ");
+            $this->payments_model->check_due_date($date);
             redirect('admins');
         }
         else{
@@ -156,17 +159,19 @@ class Admins extends CI_Controller {
             $unitname = $this->input->post('unitname');
             $blockname = $this->input->post('blockname');
             $location = $this->input->post('location');
+              $date = date("Y-m-d ");
             
 
             $this->load->model('blocks_model');
-
-            
-
-
-            $occupied_unit = $this->blocks_model->occupy_unit($firstname, $lastname, $username, $pwd, $email, $telephone, $unitname, $blockname, $location);
+             $occupied_unit = $this->blocks_model->occupy_unit($firstname, $lastname, $username, $pwd, $email, $telephone, $unitname, $blockname, $location, $date );
             
             
             if($occupied_unit){
+              
+             $this->load->model('tenants_model');
+             $rent = $this->tenants_model->get_rent($email);
+             $this->load->model('payments_model');
+             $this->payments_model->rent_detail($rent ,$email, $date);
             $this->index();
         } else{
             echo "unitname/blockname entered does not exist or is already occupied";

@@ -1,10 +1,6 @@
 
-/**
- * Created by faithmaina71@gmail.com.
- * User: USER
- * Date: 1/28/2016
- * Time: 13:00
- */ <div class="container tpad">
+
+ <div class="container tpad">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-primary">
