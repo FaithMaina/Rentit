@@ -34,4 +34,22 @@ class Landlords_model extends CI_Model
 
     }
 
+    public function get_rent_remmitted($value)
+    {
+        $query = "SELECT * FROM payments WHERE block_name ='" . $value . "'";
+        $rent = $this->db->query($query)->result_array();
+            
+          return $rent;  
+      
+    }
+
+    public function get_views($value)
+    {
+        $query = "SELECT * FROM views WHERE block_name ='" . $value . "'";
+        $all_views = $this->db->query($query)->result_array();
+            
+          return $all_views;  
+      
+    }
+
 }

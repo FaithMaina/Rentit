@@ -24,6 +24,23 @@ class Get_data_model extends CI_Model
 
     }
 
+     public function get_all_payments()
+    {
+        $query = "SELECT * FROM payments";
+        $all_payments = $this->db->query($query)->result_array();
+        return $all_payments;
+
+    }
+
+    public function get_all_views()
+    {
+        $query = "SELECT * FROM views";
+        $all_views = $this->db->query($query)->result_array();
+        return $all_views;
+
+    }
+
+
     public function get_all_units()
     {
         $query = "SELECT * FROM blocks";

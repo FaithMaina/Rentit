@@ -1,7 +1,8 @@
+
 <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <h3 class="lead">Landlord Options</h3>
+            <h3 class="lead"><a href="<?php echo base_url();?>landlords">Landlord Options</a></h3>
             <ul class="nav nav-sidebar">
             <li><a href="<?php echo base_url();?>landlords/register_block" class="active navbar-inverse">Register new Block</a></li>
             <li><a href="<?php echo base_url();?>landlords/check_rent">Rent Remmitted</a></li>
@@ -11,32 +12,36 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Your Blocks</h1>
+          <h1 class="page-header">RENT REMMITTED</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="navbar-default">
-               <div>
-                    <tr>  
+
+                    <tr>
                         <th>Block Name</th>
-                        <th>Total units</th>
-                        <th>Location</th>
-                     
+                        <th>Unit Name</th>
+                        <th>Invoice Number</th>
+                        <th>Amout Paid</th>
+                        <th>Date</th>
+                        
+
                     </tr>
-                </div>
+
               </thead>
               <tbody>
-                  <?php foreach ($units as $unit):?>
-                  <tr>
-                      <td><?php echo $unit['block_name'];?></td>
-                      <td><?php echo $unit['totalunits']; ?></td>
-                      <td><?php echo $unit['location']; ?></td>
-                  </tr>
-                  <?php endforeach; ?>
-              </tbody>
-            </table>
-              <li><a href="<?php echo base_url();?>landlords/occupied" class="btn btn-success btn-info btn-sm btn">Occupied Units</a></li><br><br>
-          </div>
-        </div>
-      </div>
-    </div>
+              <?php foreach ($rent_paid as $key => $detail):?>
+                    <tr>
+                        <td><?php echo $detail['block_name'];?></td>
+                        <td><?php echo $detail['unit_name'];?></td>
+                        <td><?php echo $detail['invoice_num'];?></td>
+                        <td><?php echo $detail['amount'];?></td>
+                        <td><?php echo $detail['date'];?></td>
+                    </tr>
+                <?php endforeach; ?>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>

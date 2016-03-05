@@ -27,30 +27,26 @@ class Payments_model extends CI_Model
     public function record_payment($data)
 
     {
-    	print_r($data);
-    	$this->db->where('invoice_num',$data['invoice_number']);
-        
-
-        $query = $this->db->get('payments');
-
         $this->load->helper('date');
         $datestring = "%Y-%m-%d ";
-		$date = mdate($datestring);
-		echo $date; 
-
-        if($query->num_rows == 0){
+        $date = mdate($datestring);
+    	$this->db->where('invoice_num',$data['invoice_number']);
+      $query = $this->db->get('payments');
+          if($query->num_rows == 0){
     	
        $insert = array(
        		'email' => $data['email'],
        		'amount' => $data['amount_paid'],
-	 		'date'=> $date,
-	 		'invoice_num' => $data['invoice_number']
+	 		    'date'=> $date,
+	 		    'invoice_num' => $data['invoice_number'],
+          'block_name' => $data['blockname'],
+          'unit_name' => $data['unitname']
        	); 
         $this->db->insert("payments", $insert);
         $email = $data['email'];
         $amount = $data['amount_paid'];
         $query = $this->db->query("SELECT rent_balance FROM rent_details WHERE email = '" . $email . "'")->result_array();
-        echo "<pre>"; print_r($query); 
+  
     	foreach ($query as $key){
     		$rent_balance = $key['rent_balance'];
     		$new_rent_balance = $rent_balance - $amount;
@@ -69,7 +65,7 @@ class Payments_model extends CI_Model
     {
     	echo $date;
     	$query = $this->db->query('SELECT * FROM rent_details')->result_array();
-    	echo "<pre>"; print_r($query); 
+    
     	//exit();
     	foreach ($query as $key)
 		{
@@ -108,7 +104,7 @@ class Payments_model extends CI_Model
 		}
 	
 	 }
-     public function rent_due($rent)
+     public function produce_receipt($data)
     {
         
     }

@@ -24,7 +24,7 @@
               <a href="<?php echo base_url();?>tenants/login" class="btn btn-lg btn-default">Tenants' Portal</a><br/><br/>
               <a href="<?php echo base_url();?>admins/login" class="btn btn-lg btn-default">Admin</a><br/><br/>
               <a href="<?php echo base_url();?>caretakers/login" class="btn btn-lg btn-default">Caretakers' Portal</a><br/><br/>
-              <a href="<?php echo base_url();?>home/search_vacant" class="btn btn-lg btn-default">Looking for a vacant House...</a><br/>
+              <a href="<?php echo base_url();?>home/vacant" class="btn btn-lg btn-default">Looking for a vacant House...</a><br/>
             </p>
           </div>
 

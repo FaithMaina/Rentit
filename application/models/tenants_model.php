@@ -41,6 +41,44 @@ class Tenants_model extends CI_Model
        
 
     }
+     public function schedule_view($name, $email, $telephone, $blockname,$unitname, $date)
+    {
+
+       $this->db->where('name', $name);
+        $this->db->where('email',$email);
+        $this->db->where('telephone',$telephone);
+        $this->db->where('block_name',$blockname);
+        $this->db->where('unit_name',$unitname);
+        $this->db->where('date',$date);
+        $query = $this->db->get('views');
+        
+        if($query->num_rows == 0){
+          
+          $data = array(
+            'name' => $name,
+            'email' => $email,  
+            'telephone' => $telephone, 
+            'unit_name' => $unitname,               
+            'block_name' => $blockname,
+            'date' => $date,
+       
+                );
+
+     
+            $this->db->insert("views", $data); 
+
+
+            return TRUE;    
+        
+        }
+
+             else {
+
+                
+                return FALSE;
+             }
+
+  }
 
 
 

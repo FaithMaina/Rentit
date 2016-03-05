@@ -20,22 +20,28 @@ class Tenants extends CI_Controller
     {
         $data['title'] = 'Rent';
         $this->load->helper('string');
-        $amount = $this->input->post('amount');
-        $data = array(
-              'amount' => $amount,
-              'invoice_number' =>random_string('numeric', 8) 
-             
-            );
         $this->load->library('session');
-        $this->session->set_userdata($data);
         $this->load->model('tenants_model');
         $userdata = $this->session->all_userdata();
+        $amount = $this->input->post('amount');
+        $data['email'] = $userdata['email'];
+        $data['tenant_detail'] = $this->tenants_model->get_unit($data['email']);
+        $blockname = $data['tenant_detail'][0]['block_name'];
+        $unitname = $data['tenant_detail'][0]['unitname'];
+        $data = array(
+              'amount' => $amount,
+              'invoice_number' =>random_string('numeric', 8),
+            'blockname' => $blockname,
+            'unitname' => $unitname
+            );
+         $this->session->set_userdata($data);
+         $userdata = $this->session->all_userdata();
+        $this->load->library('session');
         $data['email'] = $userdata['email'];
         $data['amount'] = $userdata['amount'];
         $data['tenant_detail'] = $this->tenants_model->get_unit($data['email']);
-        //$data['tenant_rent'] = $this->tenants_model->get_rent($email);
+        $data['tenant_rent'] = $this->tenants_model->get_rent($email);
         $data['invoice_number'] = $userdata['invoice_number'];
-        print_r($userdata); 
         $data['main_content'] = 'tenants/invoice.php';
         $this->load->view('includes/template', $data);
         

@@ -1,10 +1,10 @@
  <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <h3 class="lead"><a href="<?php echo base_url();?>tenants">Tenant Options</a></h3>
+            <h3 class="lead">Tenant Options</h3>
             <ul class="nav nav-sidebar">
              <li><a href="<?php echo base_url();?>tenants/complaints">Complaint/Notice</a></li>
-              <li><a href="<?php echo base_url();?>tenants/house_search">Search Vacant</a></li>
+              <li><a href="<?php echo base_url();?>home/vacant">Search Vacant</a></li>
               <li><a href="<?php echo base_url();?>tenants/sign_out">Logout</a></li>
           </ul>
         </div>

@@ -8,10 +8,9 @@ public function index(){
 
 }
 
-public function insert_new_block($block_name, $block_number,$landlord_name, $caretaker_name, $total_units,$location){
+public function insert_new_block($block_name,$landlord_name, $caretaker_name, $total_units,$location){
 		    
         $this->db->where('block_name', $block_name);
-        $this->db->where('block_number',$block_number);
         $this->db->where('landlord_name',$landlord_name);
 
        
@@ -22,7 +21,6 @@ public function insert_new_block($block_name, $block_number,$landlord_name, $car
           
           $data = array(
 				'block_name' => $block_name,
-				'block_number' => $block_number,
 				'landlord_name' => $landlord_name,
 				'caretaker' => $caretaker_name,
 				'totalunits'=> $total_units,
@@ -55,7 +53,7 @@ public function insert_new_block($block_name, $block_number,$landlord_name, $car
 
  	  if($query->num_rows == 0){
           $data = array(
-                'landlord_name'=>$landlord_name,
+        'landlord_name'=>$landlord_name,
 				'block_name' => $block_name,
 				'unit_name' => $name[$i],
 				'type' => $type[$i],

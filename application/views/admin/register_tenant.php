@@ -3,7 +3,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <h3 class="lead"><a href="<?php echo base_url();?>admins">Home </a></h3>
             <ul class="nav nav-sidebar">
-            <li><a href="<?php echo base_url();?>admins/check_rent">Rent Remmitted</a></li>
+            <li><a href="<?php echo base_url();?>admins/rent_remitted">Rent Remmitted</a></li>
               <li><a href="<?php echo base_url();?>admins/check_requests">Scheduled Views</a></li>
             <li><a href="<?php echo base_url();?>admins/sign_out">Logout</a></li>
           </ul>

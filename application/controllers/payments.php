@@ -36,34 +36,26 @@ class Payments extends CI_Controller {
 
 	 public function notify_payment()
 	 {
-	 	$payment_data = $this->input->post();
-		//echo "<pre>";
-	 	// print_r($payment_data);
-
-	 	$userdata = $this->session->all_userdata();
-	 	
-
-	 
-	 	
-
-	 	$data['email'] = $userdata['email']; 
-	 	$data['amount_paid'] = $userdata['amount'];
-	 	$data['date_paid'] = $payment_data['payment_date'];
-	 	$data['payer_email'] = $payment_data['payer_email'];
-	 	$data['receiver_email'] = $payment_data['receiver_email'];
-	 	$data['invoice_number'] = $payment_data['invoice'];
-	 	 
-
-	 	 $this->load->model('payments_model');
-	 	 $this->payments_model->record_payment($data);
+		 	$payment_data = $this->input->post();
+		 	$userdata = $this->session->all_userdata();
+	 		$data['email'] = $userdata['email']; 
+		 	$data['blockname'] = $userdata['blockname']; 
+		 	$data['unitname'] = $userdata['unitname']; 
+		 	$data['amount_paid'] = $userdata['amount'];
+		 	$data['date_paid'] = $payment_data['payment_date'];
+		 	$data['payer_email'] = $payment_data['payer_email'];
+		 	$data['receiver_email'] = $payment_data['receiver_email'];
+		 	$data['invoice_number'] = $payment_data['invoice'];
+	 $this->load->model('payments_model');
+	 $this->payments_model->record_payment($data);
 	 	 	$data['paymentdata'] = $payment_data;
 	 	 	$data['amount'] = $userdata['amount'];
 	 	 	$data['email'] = $userdata['email'];
 	 	 	$data['payer_email'] = $payment_data['payer_email'];
 	 	 	$data['invoice_number'] = $payment_data['invoice'];
 	 	 	$data['userdata'] = $this->session->all_userdata();
-	 	 	 $data['main_content'] = 'tenants/payment_successful';
-        	$this->load->view('includes/template', $data);
+	 	 	$data['main_content'] = 'tenants/payment_successful';
+       $this->load->view('includes/template', $data);
 
 	 	 	//load receipt view# code...
 	 	 

@@ -9,6 +9,37 @@ class Admins extends CI_Controller {
         $data['main_content'] = 'admin/home';
         $this->load->view('includes/template', $data);
 	}
+    public function login()
+    {
+         $data['title'] = 'Login';
+        $data['main_content'] = 'admin/login';
+        $this->load->view('includes/template', $data);
+    }
+
+    
+
+     public function validate_credentials(){
+        $this->load->model('users_model');
+        $username = $this->input->post('uname');
+        $password = $this->input->post('pwd');
+        $query = $this->users_model->validate_admin($username, $password);
+        if($query){
+            $data = array(
+              'username' => $username,
+              'is_logged_in' => TRUE  
+            );
+            $this->load->library('session');
+            $this->session->set_userdata($data);
+            $this->load->model('payments_model');
+            $date = date("Y-m-d ");
+            $this->payments_model->check_due_date($date);
+            redirect('admins');
+        }
+        else{
+            $this->login();
+        }
+     
+    }
 
     public function occupied()
     {
@@ -41,38 +72,23 @@ class Admins extends CI_Controller {
         $data['main_content'] = 'admin/vacant';
         $this->load->view('includes/template', $data);
     }
-
-	public function login()
-	{
-		 $data['title'] = 'Login';
-        $data['main_content'] = 'admin/login';
+     public function rent_remitted()
+    {
+        $data['title'] = 'rent';
+        $data['rent'] = $this->get_data_model->get_all_payments();
+        $data['main_content'] = 'admin/rent_remmitted';
         $this->load->view('includes/template', $data);
-	}
-
-    
-
-	 public function validate_credentials(){
-        $this->load->model('users_model');
-        $username = $this->input->post('uname');
-        $password = $this->input->post('pwd');
-        $query = $this->users_model->validate_admin($username, $password);
-        if($query){
-            $data = array(
-              'username' => $username,
-              'is_logged_in' => TRUE  
-            );
-            $this->load->library('session');
-            $this->session->set_userdata($data);
-            $this->load->model('payments_model');
-            $date = date("Y-m-d ");
-            $this->payments_model->check_due_date($date);
-            redirect('admins');
-        }
-        else{
-            $this->login();
-        }
-     
     }
+
+    public function check_requests()
+    {
+        $data['title'] = 'viewings';
+        $data['views'] = $this->get_data_model->get_all_views();
+        $data['main_content'] = 'admin/scheduled_views';
+        $this->load->view('includes/template', $data);
+    }
+
+	
     public function register_tenant()
     {
          $data['title'] = 'Register Tenant';

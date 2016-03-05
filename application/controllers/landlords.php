@@ -35,12 +35,33 @@ class Landlords extends CI_Controller {
     }	
 
     public function get_units(){
-    	//echo "string";
-    	//$this->load->model('get_data_model');
+    	
     	$userdata = $this->session->all_userdata();
     	$username = $userdata['username'];
         $data['units'] = $this->get_data_model->get_units($username);
         $data['main_content'] = 'landlords/home';
+		$this->load->view('includes/template', $data);
+    }
+
+     public function check_rent(){
+    	$this->load->model('landlords_model');
+    	$userdata = $this->session->all_userdata();
+    	$username = $userdata['username'];
+    	 $blocks = $this->get_data_model->get_units($username);
+
+    	   foreach ($blocks as $key => $value) {
+    	   	$block_name[] = $value['block_name'];
+    	   }
+    	   foreach ($block_name as $key => $value) {
+    	   	$rent_remmitted[] = $this->landlords_model->get_rent_remmitted($value);
+    	   }
+    	   foreach ($rent_remmitted as $key => $value) {
+    	   	 foreach ($value as $key => $rent) {
+    	   	 	$rent_all[] = $rent; 
+    	   	 }
+    	   }
+        $data['rent_paid'] = $rent_all;
+       	$data['main_content'] = 'landlords/check_rent';
 		$this->load->view('includes/template', $data);
     }
 
@@ -59,6 +80,28 @@ class Landlords extends CI_Controller {
         $this->load->view('includes/template', $data);
     }
 
+      public function check_requests()
+    {
+    	$this->load->model('landlords_model');
+        $userdata = $this->session->all_userdata();
+        $username = $userdata['username'];
+        $blocks = $this->get_data_model->get_units($username);
+        foreach ($blocks as $key => $value) {
+    	   	$block_name[] = $value['block_name'];
+    	   }
+    	   foreach ($block_name as $key => $value) {
+    	   	$viewings[] = $this->landlords_model->get_views($value);
+    	   }
+    	   foreach ($viewings as $key => $value) {
+    	   	 foreach ($value as $key => $viewing) {
+    	   	 	$all_views[] = $viewing; 
+    	   	 }
+    	   }
+        $data['all_views'] = $all_views;
+       	$data['main_content'] = 'landlords/views';
+		$this->load->view('includes/template', $data);
+    }
+    
 	public function get_block_details($block_name, $total_units, $location)
 	{
 		$data['block_name'] = $block_name;
@@ -87,7 +130,7 @@ class Landlords extends CI_Controller {
         $landlord_name = $userdata['username'];
 
 	
-	 $inserted_block_details = $this->blocks_model->insert_new_block_details($total_units,$block_name,$landlord_name, $name, $type, $floor, $rent, $location);
+	 $inserted_block_details = $this->blocks_model->insert_new_block_details($total_units, $block_name, $landlord_name, $name, $type, $floor, $rent, $location);
 	if($inserted_block_details)
 			{
 				$this->get_units();
@@ -119,7 +162,6 @@ class Landlords extends CI_Controller {
     	
 
 			$block_name = $this->input->post('block_name');
-			$block_number = $this->input->post('block_number');
 			$landlord_name = $userdata['username'];
 			$caretaker_name = $this->input->post('caretaker_name');
 			$total_units = $this->input->post('total_units');
@@ -131,7 +173,7 @@ class Landlords extends CI_Controller {
 			
 
 
-			$inserted_block = $this->blocks_model->insert_new_block($block_name, $block_number,$landlord_name, $caretaker_name, $total_units, $location);
+			$inserted_block = $this->blocks_model->insert_new_block($block_name, $landlord_name, $caretaker_name, $total_units, $location);
 			
 			
 			if($inserted_block)
