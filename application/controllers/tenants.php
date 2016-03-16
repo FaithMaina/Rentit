@@ -39,7 +39,8 @@ class Tenants extends CI_Controller
         $this->load->library('session');
         $data['email'] = $userdata['email'];
         $data['amount'] = $userdata['amount'];
-        $data['tenant_detail'] = $this->tenants_model->get_unit($data['email']);
+         $email = $data['email'];
+        $data['tenant_detail'] = $this->tenants_model->get_unit($email);
         $data['tenant_rent'] = $this->tenants_model->get_rent($email);
         $data['invoice_number'] = $userdata['invoice_number'];
         $data['main_content'] = 'tenants/invoice.php';
@@ -86,6 +87,54 @@ class Tenants extends CI_Controller
             $this->login();
         }
 
+    }
+
+    public function complaints(){
+        $complaint = $this->input->post('complaint');
+        $this->load->model('tenants_model');
+        $userdata = $this->session->all_userdata();
+        $email = $userdata['email'];
+        $tenant_detail = $this->tenants_model->get_unit($email);
+        $submit_complaint = $this->tenants_model->submit_complaint($tenant_detail, $complaint);
+        if ($submit_complaint) {
+           echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <strong> The Complaint has been submitted.</strong> 
+                </div>';
+            $this->index();
+        } else{
+            echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <strong> The Complaint failed to submit, try again later.</strong> 
+            </div>';
+            $this->index();
+
+        }
+        
+    }
+
+     public function notice(){
+        $notice = $this->input->post('notice');
+        $this->load->model('tenants_model');
+        $userdata = $this->session->all_userdata();
+        $email = $userdata['email'];
+        $tenant_detail = $this->tenants_model->get_unit($email);
+        $submit_notice = $this->tenants_model->submit_notice($tenant_detail, $notice);
+        if ($submit_notice) {
+           echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <strong> The Notice has been submitted.</strong> 
+                </div>';
+            $this->index();
+        } else{
+            echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <strong> The Notice failed to submit, try again later.</strong> 
+            </div>';
+            $this->index();
+
+        }
+       
     }
 
     public function sign_out()

@@ -135,8 +135,9 @@
 
                                         <?php
                                            $data = array(
-                                          'name'        => 'date',
-                                          'id'          => 'date',                      
+                                          'name' => 'date',
+                                          'type' => 'date',
+                                          'id'    => 'date',                      
                                           'class' => 'form-control',
                                           'placeholder' => 'YYYY-MM-DD'
                                           

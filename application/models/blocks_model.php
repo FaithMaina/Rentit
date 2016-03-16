@@ -12,9 +12,6 @@ public function insert_new_block($block_name,$landlord_name, $caretaker_name, $t
 		    
         $this->db->where('block_name', $block_name);
         $this->db->where('landlord_name',$landlord_name);
-
-       
-   
         $query = $this->db->get('blocks');
         
         if($query->num_rows == 0){
@@ -103,7 +100,49 @@ public function insert_new_block($block_name,$landlord_name, $caretaker_name, $t
 
        	return FALSE;
        }
-
+   }
+   public function unoccupy_unit($blockname , $unitname){
+    $query = "UPDATE block_details SET OCCUPIED = '0' WHERE block_name = '$blockname' && unit_name = '$unitname'";
+    $this->db->query($query);
+   }
+   
+   public function update_rent($unit_id, $rent){
+    $query = "UPDATE block_details SET rent = '$rent' WHERE id = '$unit_id' ";
+    $this->db->query($query);
+    $unit = "SELECT unit_name FROM block_details WHERE id = '$unit_id'" ;
+    $unit_name = $this->db->query($unit)->result_array();
+    $unit = $unit_name[0]['unit_name'];
+    $rent = "UPDATE rent_details SET rent = '$rent' WHERE unitname = '$unit' ";
+    $this->db->query($rent);
+    $quer = "SELECT block_name FROM block_details WHERE id = '$unit_id'" ;
+    $block_name = $this->db->query($quer)->result_array();
+     return $block_name[0]['block_name'];
 
    }
+
+   public function rent_sum($block_name){
+    $query = "SELECT rent FROM block_details WHERE block_name = '$block_name'" ;
+   $rent = $this->db->query($query)->result_array();
+   $total = 0;
+   foreach ($rent as $key => $rent_value) {
+    $total = $total + $rent_value['rent'];
+     # code...
+   }
+      $this->load->helper('date');
+      $now = now();
+      $date = date('Y-m-d', $now);
+      $data = array(
+            'block_name' => $block_name, 
+            'date' => $date, 
+            'expected_rent_sum'=>$total,
+            
+        
+        );
+
+           $this->db->insert("rent_sum", $data); 
+   
+    
+    
+   }
+
 }

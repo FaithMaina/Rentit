@@ -15,6 +15,47 @@ class Admins extends CI_Controller {
         $data['main_content'] = 'admin/login';
         $this->load->view('includes/template', $data);
     }
+    public function change_password(){
+        $data['title'] = 'Change Password';
+        $data['main_content'] = 'admin/change_password';
+        $this->load->view('includes/template', $data);
+
+    }
+
+    public function validate_newpwd()
+    {
+        $this->load->library('form_validation');
+         $this->form_validation->set_rules('username','Username','required|trim|xss_clean');
+        $this->form_validation->set_rules('oldpassword','Old Password','required|trim|xss_clean');
+        $this->form_validation->set_rules('newpassword','New Password','required|trim|xss_clean');
+        $this->form_validation->set_rules('conpassword','Confirm New Password','required|trim|xss_clean|matches[newpassword]');
+
+        if($this->form_validation->run()!= true)
+        {
+            $this->change_password();
+        } else {
+            $username = $this->input->post('username');
+            $oldpassword = $this->input->post('oldpassword');
+            $newpassword = $this->input->post('newpassword');
+    
+            $this->load->model('users_model');
+            $change_password = $this->users_model->change_admin_pwd($username ,$oldpassword,$newpassword);
+                if ($change_password) {
+                    echo '<div class="alert alert-success alert-dismissible center"  role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <strong> Password Updated.</strong> 
+            </div>';
+                $this->index();
+                }else{
+                    echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <strong> Wrong Old Password!.</strong> 
+                </div>';
+                $this -> change_password(); 
+                }
+
+        }
+    }
 
     
 
@@ -179,15 +220,17 @@ class Admins extends CI_Controller {
             
 
             $this->load->model('blocks_model');
-             $occupied_unit = $this->blocks_model->occupy_unit($firstname, $lastname, $username, $pwd, $email, $telephone, $unitname, $blockname, $location, $date );
+            $occupied_unit = $this->blocks_model->occupy_unit($firstname, $lastname, $username, $pwd, $email, $telephone, $unitname, $blockname, $location, $date );
             
             
             if($occupied_unit){
               
              $this->load->model('tenants_model');
              $rent = $this->tenants_model->get_rent($email);
+             $units = $this->tenants_model->get_unit($email);
+             $unit = $units[0]['unitname'];
              $this->load->model('payments_model');
-             $this->payments_model->rent_detail($rent ,$email, $date);
+             $this->payments_model->rent_detail($rent ,$email, $date, $unit);
             $this->index();
         } else{
             echo "unitname/blockname entered does not exist or is already occupied";
@@ -198,7 +241,33 @@ class Admins extends CI_Controller {
 
     }
 }
-   
+    public function remove_tenant(){
+        $this->load->model('tenants_model');
+        $id = $this->uri->segment(3);
+       $delete_tenant = $this->tenants_model->delete_tenant($id);
+       if ($delete_tenant) {
+            $blockname = $delete_tenant[0]['block_name'];
+            $unitname = $delete_tenant[0]['unitname'];
+            $email = $delete_tenant[0]['email'];
+            $this->load->model('blocks_model');
+            $unoccupy = $this->blocks_model->unoccupy_unit($blockname , $unitname);
+            $this->load->model('payments_model');
+            $delete_rent = $this->payments_model->remove_rent_detail($email);
+        echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+                          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                           The Tenant was deleted successfully. .</strong> 
+                    </div>';
+                    $this->get_tenants();
+       }else{
+        echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+                          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <strong>Warning!</strong> The Tenant Failed to delete. Try again later.</strong> 
+                    </div>';
+                    $this->get_tenants();
+       }
+       
+        
+    }
 
         
 

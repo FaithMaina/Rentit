@@ -16,6 +16,15 @@ class Get_data_model extends CI_Model
 
     }
 
+     public function get_caretakers_units($username)
+    {
+        $query = "SELECT * FROM blocks WHERE caretaker ='" . $username . "'";
+        $units = $this->db->query($query)->result_array();
+        return $units;
+
+    }
+
+
     public function get_occupied($username)
     {
         $query = "SELECT * FROM block_details WHERE landlord_name ='" . $username . "' and occupied = '1'";
@@ -78,6 +87,16 @@ class Get_data_model extends CI_Model
         $query = "SELECT * FROM landlords";
         $all_landlords = $this->db->query($query)->result_array();
         return $all_landlords;
+
+    }
+
+    public function get_block_details($id){
+        $query = "SELECT block_name FROM blocks WHERE id = " .$id ;
+        $block =  $this->db->query($query)->result_array();
+        $block_name = $block[0]['block_name'];
+        $query = "SELECT * FROM block_details WHERE block_name = '$block_name' ";
+        $block_detail =  $this->db->query($query)->result_array();
+       return $block_detail;
 
     }
 

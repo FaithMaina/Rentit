@@ -3,7 +3,7 @@
 class Payments_model extends CI_Model
 {
 
-	 public function rent_detail($rent, $email ,$date)
+	 public function rent_detail($rent, $email ,$date , $unit)
 
     {
     	$date=date_create($date);
@@ -16,7 +16,8 @@ class Payments_model extends CI_Model
           	'rent'=> $rent[0]['rent'],
           	'rent_due'=> '', 
           	'rent_balance'=>'',
-          	'rent_due_date'=>$rent_due_date
+          	'rent_due_date'=>$rent_due_date,
+            'unitname' => $unit
 				
 				);
 
@@ -104,9 +105,10 @@ class Payments_model extends CI_Model
 		}
 	
 	 }
-     public function produce_receipt($data)
+     public function remove_rent_detail($email)
     {
-        
+        $query = "DELETE FROM rent_details WHERE email ='" . $email . "'";
+        $this->db->query($query);
     }
 
      public function rent_balance()

@@ -70,6 +70,11 @@ class Landlords extends CI_Controller {
 		$data['main_content'] = 'landlords/register_block';
 		$this->load->view('includes/template', $data);
 	}
+	public function register_caretaker()
+	{
+		$data['main_content'] = 'landlords/register_caretaker';
+		$this->load->view('includes/template', $data);
+	}
 
     public function occupied()
     {
@@ -82,6 +87,7 @@ class Landlords extends CI_Controller {
 
       public function check_requests()
     {
+    	 error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
     	$this->load->model('landlords_model');
         $userdata = $this->session->all_userdata();
         $username = $userdata['username'];
@@ -133,11 +139,15 @@ class Landlords extends CI_Controller {
 	 $inserted_block_details = $this->blocks_model->insert_new_block_details($total_units, $block_name, $landlord_name, $name, $type, $floor, $rent, $location);
 	if($inserted_block_details)
 			{
+                $this->blocks_model->rent_sum($block_name);
 				$this->get_units();
 				
 			} else {
-				//echo 'block you registered already exists';
-			 $data['main_content'] = 'landlords/insert_block_details';
+				echo    '<div class="alert alert-warning alert-dismissible center" role="alert">
+                          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <strong>Warning!</strong> The Block you Registered already exists.</strong> 
+                    </div>';
+			 $data['main_content'] = 'landlords/register_block';
 			 $this->load->view('includes/template', $data);
 			}
 	
@@ -175,19 +185,88 @@ class Landlords extends CI_Controller {
 
 			$inserted_block = $this->blocks_model->insert_new_block($block_name, $landlord_name, $caretaker_name, $total_units, $location);
 			
-			
 			if($inserted_block)
 			{
 				$this->get_block_details($block_name, $total_units, $location);
 				
+				
 			} else {
-				//echo 'block you registered already exists';
+			echo 	'<div class="alert alert-warning alert-dismissible center" role="alert">
+						  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						  <strong>Warning!</strong> The Block you Registered already exists.</strong> 
+					</div>';
 			 $data['main_content'] = 'landlords/register_block';
 			 $this->load->view('includes/template', $data);
 			}
 	
 		}
 	}
+	 public function validate_new_caretaker()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|is_unique[caretakers.username]');
+        $this->form_validation->set_rules('caretaker_name', 'Caretakers Name', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('lusername', 'Landlord Username', 'trim|required|xss_clean');
+        if($this->form_validation->run() == FALSE)
+        {
+        
+            $this->register_caretaker();
+        }
+        else
+        {
+            //get the values from the form and store them in variables.
+            $userdata = $this->session->all_userdata();
+        
+
+            $caretaker_name = $this->input->post('caretaker_name');
+            $landlord_name = $userdata['username'];
+            $password = $this->input->post('password');
+            $username = $this->input->post('username');
+            
+            
+
+            $this->load->model('caretakers_model');
+
+            
+
+
+            $new_caretaker = $this->caretakers_model->insert_new_caretaker($caretaker_name, $landlord_name, $password, $username);
+           
+            
+            if($new_caretaker)
+            {
+            	$this->index();
+                
+            } else {
+            echo    '<div class="alert alert-warning alert-dismissible center" role="alert">
+                          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <strong>Warning!</strong> The Caretaker you Registered already exists.</strong> 
+                    </div>';
+             $data['main_content'] = 'landlords/register_caretaker';
+             $this->load->view('includes/template', $data);
+            }
+    
+        }
+    }
+
+    public function edit_block_details(){
+        $id = $this->uri->segment(3);
+        $data['block_details'] = $this->get_data_model->get_block_details($id);
+        $data['main_content'] = 'landlords/block_details';
+        $this->load->view('includes/template', $data);
+
+    }
+
+    public function change_rent(){
+        $unit_id = $this->input->post('unit_id');
+        $rent = $this->input->post('rent');
+       $this->load->model('blocks_model');
+       $block_name = $this->blocks_model->update_rent($unit_id, $rent);
+       $expected_rent_sum = $this->blocks_model->rent_sum($block_name);
+        $this->get_units();
+       }
+       
 	public function sign_out()
     {
         $this->session->sess_destroy();

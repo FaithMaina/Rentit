@@ -9,6 +9,7 @@
               <li><a href="<?php echo base_url();?>admins/check_requests">Scheduled Views</a></li>
                 <li><a href="<?php echo base_url();?>admins/get_landlords">Our Landlords</a></li>
                 <li><a href="<?php echo base_url();?>admins/get_tenants">Our Tenants</a></li>
+                <li><a href="<?php echo base_url();?>admins/change_password">Change Password</a></li>
               <li><a href="<?php echo base_url();?>admins/sign_out">Logout</a></li>
           </ul>
         </div>

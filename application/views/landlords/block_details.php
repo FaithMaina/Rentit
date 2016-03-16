@@ -12,37 +12,39 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Your Blocks</h1>
+          <h1 class="page-header">Block's Details</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="navbar-default">
                <div>
-                    <tr>  
-                        <th>Block Name</th>
-                        <th>Total units</th>
-                        <th>Location</th>
-                         <th>Details</th>
+                    <tr> 
+                        <th></th>
+                        <th>Unit Name</th>
+                        <th>Occupied</th>
+                        <th>Type</th>
+                         <th>Rent</th>
+                         <th>Update</th>
                      
                     </tr>
                 </div>
               </thead>
               <tbody>
-                  <?php foreach ($units as $unit):?>
+                  <?php foreach ($block_details as $detail):?>
+
                   <tr>
-                      <td><?php echo $unit['block_name'];?></td>
-                      <td><?php echo $unit['totalunits']; ?></td>
-                      <td><?php echo $unit['location']; ?></td>
-                       <td><?php echo anchor('landlords/edit_block_details/'.$unit['id'], 'Edit'); ?></td>
+                      <?php echo form_open('landlords/change_rent');?>
+                      <td><input type="hidden" value="<?php echo $detail['id'];?>" name="unit_id"></td>
+                      <td><?php echo $detail['unit_name'];?></td>
+                      <td><?php echo $detail['occupied']; ?></td>
+                      <td><?php echo $detail['type']; ?></td>
+                      <td ><input type="number" name="rent" maxlength="7" value="<?php echo $detail['rent'];?>"> </td>
+                      <td><input type="submit" value="Update" class="btn btn-info btn-sm"></td>
+                      <?php echo form_close();?>
                   </tr>
                   <?php endforeach; ?>
               </tbody>
             </table>
-                  <a href="<?php echo base_url();?>landlords/occupied" class="btn btn-success btn-info btn-sm btn">Occupied Units</a><br><br>
-                  <a href="<?php echo base_url();?>landlords/occupied" class="btn btn-success btn-info btn-sm btn">Occupied Units Report</a><br><br>
-                  <a href="<?php echo base_url();?>charts/rentchart"class="btn btn-success btn-info btn-sm btn">Rent Remmittance Report</a><br><br>
-
-                  
           </div>
         </div>
       </div>

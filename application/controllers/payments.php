@@ -12,7 +12,7 @@ class Payments extends CI_Controller {
 	 	$userdata = $this->session->all_userdata();
 	 	$config['business'] 			= 'rentit2@gmail.com';
 		$config['cpp_header_image'] 	= ''; //Image header url [750 pixels wide by 90 pixels high]
-		$config['return'] 				= 'http://192.168.43.196/Rentit/payments/notify_payment';
+		$config['return'] 				= 'http://192.168.43.182/Rentit/payments/notify_payment';
 		$config['notify_url'] 			= '<?php echo base_url();?>payments/notify_payment';
 		$config['cancel_return'] 			= '<?php echo base_url();?>payments/cancel_payment';
 		$config['production'] 			= FALSE; //Its false by default and will use sandbox

@@ -78,9 +78,62 @@ class Tenants_model extends CI_Model
                 return FALSE;
              }
 
-  }
+    }
+
+    public function submit_notice($tenant_detail, $notice){
+       
+        $this->load->helper('date');
+        $datestring = "%Y-%m-%d ";
+        $date = mdate($datestring);
+         $insert = array(
+        'tenant' => $tenant_detail[0]['first_name'] .' '. $tenant_detail[0]['last_name'],
+        'blockname' => $tenant_detail[0]['block_name'],
+        'unitname' => $tenant_detail[0]['unitname'],
+        'date_to_vacate'=>$notice,
+        'date' =>$date 
+        );
+        if( $this->db->insert("notices", $insert)){
+            return TRUE;}
+            else{
+                return FALSE;
+            }
+        
 
 
+    }
+
+    public function submit_complaint($tenant_detail, $complaint){
+       
+      $this->load->helper('date');
+        $datestring = "%Y-%m-%d ";
+        $date = mdate($datestring);
+         $insert = array(
+        'tenant' => $tenant_detail[0]['first_name'] .' '. $tenant_detail[0]['last_name'],
+        'blockname' => $tenant_detail[0]['block_name'],
+        'unitname' => $tenant_detail[0]['unitname'],
+        'complaint'=>$complaint,
+        'date' =>$date 
+        );
+        if( $this->db->insert("complains", $insert)){
+            return TRUE;}
+            else{
+                return FALSE;
+            }
+          
+    }
+
+    public function delete_tenant($id){
+        $details = "SELECT * FROM tenants WHERE id ='" . $id . "'";
+        $tenant_detail = $this->db->query($details)->result_array();
+        $query = "DELETE FROM tenants WHERE id = " .$id;
+       if ($this->db->query($query)) {
+            return $tenant_detail;
+        } else {
+            return FALSE;
+        }
+
+
+    }
 
 
 }

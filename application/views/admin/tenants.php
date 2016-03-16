@@ -27,6 +27,7 @@
                         <th>Telephone</th>
                         <th>Block Name</th>
                         <th>Unit</th>
+                        <th>Delete</th>
 
                     </tr>
 
@@ -39,6 +40,7 @@
                             <td><?php echo $tenant['telephone'];?></td>
                             <td><?php echo $tenant['block_name'];?></td>
                             <td><?php echo $tenant['unitname'];?></td>
+                            <td><?php echo anchor('admins/remove_tenant/'.$tenant['id'], 'Remove'); ?></td>
 
                         </tr>
                     <?php endforeach; ?>

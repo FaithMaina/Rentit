@@ -1,5 +1,5 @@
   
-    <div class="site-wrapper">
+    <div class="site-wrapper text-center">
 
       <div class="site-wrapper-inner">
 
