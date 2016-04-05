@@ -2,7 +2,7 @@
 
 class Landlords_model extends CI_Model
 {
-    public function register_landlord($firstname, $lastname, $username, $pwd, $email, $telephone)
+    public function register_landlord($firstname, $lastname, $username, $pwdhash, $email, $telephone)
     {
         $this->db->where('First_name',$firstname);
         $this->db->where('Last_name',$lastname);
@@ -16,7 +16,7 @@ class Landlords_model extends CI_Model
                 'first_name' => $firstname,
                 'last_name' => $lastname,
                 'username'=>$username,
-                'password' => $pwd,
+                'password' => $pwdhash,
                 'email'=> $email,
                 'telephone_no'=> $telephone,
 

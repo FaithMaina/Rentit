@@ -2,7 +2,7 @@
 <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <h3 class="lead"><a href="<?php echo base_url();?>landlords">Landlord Options</a></h3>
+            <h3 class="lead"><a href="<?php echo base_url();?>landlords">Home</a></h3>
             <ul class="nav nav-sidebar">
             <li><a href="<?php echo base_url();?>admins/register_landlord" class="active navbar-inverse">Register Landlord</a></li>
                  <li><a href="<?php echo base_url();?>admins/register_tenant">Register Tenant</a></li>

@@ -66,7 +66,7 @@ public function insert_new_block($block_name,$landlord_name, $caretaker_name, $t
 	return TRUE;
   }
 
-   public function occupy_unit($firstname, $lastname, $username, $pwd, $email, $telephone, $unitname, $blockname, $location, $date){
+   public function occupy_unit($firstname, $lastname, $username, $pwdhash, $email, $telephone, $unitname, $blockname, $location, $date){
    	//update the 'occupied' field to 1 in the table 'block_details' for the row with above parameters i 'unitname' and 'blockname' field
       
         $this->db->where('block_name',$blockname);
@@ -80,7 +80,7 @@ public function insert_new_block($block_name,$landlord_name, $caretaker_name, $t
           	'first_name' => $firstname, 
           	'last_name' => $lastname, 
           	'username'=>$username,
-          	'password' => $pwd, 
+          	'password' => $pwdhash, 
           	'email'=> $email,
           	'telephone'=> $telephone,
           	'unitname'=> $unitname, 

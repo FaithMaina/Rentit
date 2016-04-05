@@ -11,6 +11,7 @@
               <li><a href="<?php echo base_url();?>landlords/sign_out">Logout</a></li>
           </ul>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Block's Details</h1>
 
@@ -23,8 +24,8 @@
                         <th>Unit Name</th>
                         <th>Occupied</th>
                         <th>Type</th>
-                         <th>Rent</th>
-                         <th>Update</th>
+                        <th>Rent</th>
+                        <th>Update</th>
                      
                     </tr>
                 </div>
@@ -45,7 +46,109 @@
                   <?php endforeach; ?>
               </tbody>
             </table>
+            
+          <?php echo form_open('charts/block_rent_details'); ?>
+                <td><input type="hidden" value="<?php echo $block_details[0]['block_name'];?>" name="block_name"></td>
+            <div class="col-xs-12 col-sm-3">
+              <strong>From:</strong> <input type="date" class="form-control" name="from">
+              
+            </div>
+
+            <div class="col-xs-12 col-sm-3">
+              <strong>To:</strong> <input type="date" class="form-control" name="to">
+              
+            </div>
+
+            <div class="col-xs-12 col-sm-3">
+              <br/>
+              <button class="btn btn-success btn-info btn-sm btn" type="submit">Generate Rent Report</button>
+            </div>
+          <?php echo form_close(); ?>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="rentreport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Enter Details</h4>
+                        </div>
+                        <div class="modal-body">
+                         <?php echo form_open('charts/block_rent_details'); ?>
+                          <div class="col-md-11">
+                          
+
+                                      
+                                       <?php
+                                         $data = array(
+                                        'name'        => 'block_name',
+                                        'id'          => 'block_name',                      
+                                        'class' => 'form-control',
+                                        'placeholder' => 'Block Name'
+                                        
+                                      ); ?>
+
+                                      <div class="col-md-2" style="padding:0">
+                                          Block: 
+                                      </div>
+                                      <div class="col-md-10" style="padding:0">
+                                          <?php echo form_input($data); ?>  
+                                      </div><br><br>
+
+
+                                       <?php
+                                         $data = array(
+                                        'name'        => 'from',
+                                        'id'          => 'from',                      
+                                        'class' => 'form-control',
+                                        'type' => 'date'
+                                        
+                                      ); ?>
+
+                                      <div class="col-md-2" style="padding:0">
+                                          From: 
+                                      </div>
+                                      <div class="col-md-10" style="padding:0">
+                                          <?php echo form_input($data); ?>  
+                                      </div><br><br>
+
+                                      <?php
+                                         $data = array(
+                                        'name'        => 'to',
+                                        'id'          => 'to',                      
+                                        'class' => 'form-control',
+                                        'type' => 'date'
+                                        
+                                      ); ?>
+
+                                      <div class="col-md-2" style="padding:0">
+                                          To: 
+                                      </div>
+                                      <div class="col-md-10" style="padding:0">
+                                          <?php echo form_input($data); ?>  
+                                      </div><br><br>
+
+
+                                       
+                                  <?php 
+                                      $submit_attr = array('class'=>'btn btn-success', 'name'=>'submit');
+                                      echo form_submit($submit_attr, 'Get Report'); 
+                                  ?>
+                                 
+                         
+                      </div>        
+                          <?php echo form_close(); ?>
+                          
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+<script>
+</script>

@@ -29,6 +29,10 @@ class Landlords extends CI_Controller {
             redirect('landlords');
         }
         else{
+            echo '<div class="alert alert-warning alert-dismissible center" role="alert">
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <strong> The credentials you entered are incorrect.</strong> 
+                </div>';
             $this->login();
         }
      
@@ -223,7 +227,7 @@ class Landlords extends CI_Controller {
             $landlord_name = $userdata['username'];
             $password = $this->input->post('password');
             $username = $this->input->post('username');
-            
+            $pwdhash = password_hash($password , PASSWORD_DEFAULT);
             
 
             $this->load->model('caretakers_model');
@@ -231,7 +235,7 @@ class Landlords extends CI_Controller {
             
 
 
-            $new_caretaker = $this->caretakers_model->insert_new_caretaker($caretaker_name, $landlord_name, $password, $username);
+            $new_caretaker = $this->caretakers_model->insert_new_caretaker($caretaker_name, $landlord_name, $pwdhash, $username);
            
             
             if($new_caretaker)

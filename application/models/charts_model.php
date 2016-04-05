@@ -22,23 +22,7 @@ class Charts_model extends CI_Model {
 	}
 
     public function block_rent_details($block,$from, $to){
-        $query = "SELECT date, expected_rent_sum FROM rent_sum WHERE block_name ='" . $block . "' and date BETWEEN '". $from ."' AND '". $to ."'";
-        $rent = $this->db->query($query)->result_array();
-        
-        $jsonArray = array();
-       
-        foreach ($rent_details as $key => $row)  {
-            $jsonArrayItem = array();
-            $jsonArrayItem['label'] = $row['date'];  
-            $jsonArrayItem['value'] = $row['expected_rent_sum'];
-            array_push($jsonArray, $jsonArrayItem);
-        }
-
-       header('Content-type: application/json');
-       echo json_encode($jsonArray);
-
+        $query = "SELECT date, expected_rent_sum FROM rent_sum WHERE block_name ='" . $block . "' AND date BETWEEN '". $from ."' AND '". $to ."'";
+        return $this->db->query($query)->result_array();
     }
-
-
-
 }

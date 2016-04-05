@@ -25,8 +25,8 @@
                          <th>Block Name</th>
                          <th>Unit Name</th>
                          <th>Occupied on</th>
-                         <th>Rent Paid</th>
-                         <th>Rent Due</th>
+                         <th>Rent</th>
+                        
 
                      </tr>
 
@@ -40,7 +40,7 @@
                                  $datestring = "%d/%m/%Y";
                                  echo mdate($datestring); ?></td>
                              <td><?php echo $unit['rent'];?></td>
-                             <td><?php echo $unit['rent'];?></td>
+                            
                          </tr>
                      <?php endforeach; ?>
                      </tbody>

@@ -3,13 +3,14 @@
 class Users_model extends CI_Model {
 
 	function validate_landlord($username, $password) {
-        $this->db->where('Username', $username);
-        $this->db->where('Password',$password);
-        $query = $this->db->get('landlords');
-        
-        if($query->num_rows == 1){
-            return TRUE;
-        }
+        $query = "SELECT password FROM landlords WHERE Username = '" . $username . "'";
+        $pwd =  $this->db->query($query)->result_array();
+        $pwdhash = $pwd[0]['password'];
+
+        if (password_verify($password, $pwdhash)) {
+             return TRUE;
+            }
+
 	}
 
 	function validate_admin($username, $password) {
@@ -23,23 +24,24 @@ class Users_model extends CI_Model {
 	}
 
     function validate_tenant($email, $password){
-        $this->db->where('email', $email);
-        $this->db->where('password',$password);
-        $query = $this->db->get('tenants');
+        $query = "SELECT password FROM tenants WHERE email = '" . $email . "'";
+        $pwd =  $this->db->query($query)->result_array();
+        $pwdhash = $pwd[0]['password'];
 
-        if($query->num_rows == 1){
-            return TRUE;
-        }
+        if (password_verify($password, $pwdhash)) {
+             return TRUE;
+            }
+
     }
-
      function validate_caretaker($username, $password){
-        $this->db->where('username', $username);
-        $this->db->where('password',$password);
-        $query = $this->db->get('caretakers');
+       $query = "SELECT password FROM caretakers WHERE username = '" . $username . "'";
+        $pwd =  $this->db->query($query)->result_array();
+        $pwdhash = $pwd[0]['password'];
 
-        if($query->num_rows == 1){
-            return TRUE;
-        }
+        if (password_verify($password, $pwdhash)) {
+             return TRUE;
+            }
+
     }
 
     public function change_admin_pwd($username ,$oldpassword,$newpassword){

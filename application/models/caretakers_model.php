@@ -21,7 +21,7 @@ public function check_caretaker($caretaker_name){
 			 }
 }
 
-public function insert_new_caretaker($caretaker_name, $landlord_name, $password, $username){
+public function insert_new_caretaker($caretaker_name, $landlord_name, $pwdhash, $username){
 
 	$this->db->where('name', $caretaker_name);
  	$this->db->where('username', $username);
@@ -32,7 +32,7 @@ public function insert_new_caretaker($caretaker_name, $landlord_name, $password,
           $data = array(
         		'name'=>$caretaker_name,
 				'username' => $username,
-				'password' => $password,
+				'password' => $pwdhash,
 				'landlord' => $landlord_name
 				
 				);

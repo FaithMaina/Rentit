@@ -167,10 +167,11 @@ class Admins extends CI_Controller {
             $pwd = $this->input->post('pwd');
             $telephone = $this->input->post('telephone');
             $email = $this->input->post('email');
+            $pwdhash = password_hash($pwd , PASSWORD_DEFAULT);
 
             $this->load->model('landlords_model');
 
-            $new_landlord = $this->landlords_model->register_landlord($firstname, $lastname, $username, $pwd, $email, $telephone);
+            $new_landlord = $this->landlords_model->register_landlord($firstname, $lastname, $username, $pwdhash, $email, $telephone);
 
             if($new_landlord){
                 $this->index();
@@ -217,10 +218,10 @@ class Admins extends CI_Controller {
             $blockname = $this->input->post('blockname');
             $location = $this->input->post('location');
               $date = date("Y-m-d ");
-            
+            $pwdhash = password_hash($pwd , PASSWORD_DEFAULT);
 
             $this->load->model('blocks_model');
-            $occupied_unit = $this->blocks_model->occupy_unit($firstname, $lastname, $username, $pwd, $email, $telephone, $unitname, $blockname, $location, $date );
+            $occupied_unit = $this->blocks_model->occupy_unit($firstname, $lastname, $username, $pwdhash, $email, $telephone, $unitname, $blockname, $location, $date );
             
             
             if($occupied_unit){
@@ -277,4 +278,4 @@ class Admins extends CI_Controller {
         redirect('home');
     }
 
-    }	
+}	
