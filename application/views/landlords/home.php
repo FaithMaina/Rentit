@@ -3,8 +3,8 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <h3 class="lead">Landlord Options</h3>
             <ul class="nav nav-sidebar">
-            <li><a href="<?php echo base_url();?>landlords/register_block" class="active navbar-inverse">Register new Block</a></li>
-            <li><a href="<?php echo base_url();?>landlords/register_caretaker" class="active navbar-inverse">Register Caretaker</a></li>
+            <li><a href="<?php echo base_url();?>landlords/register_block">Register new Block</a></li>
+            <li><a href="<?php echo base_url();?>landlords/register_caretaker">Register Caretaker</a></li>
             <li><a href="<?php echo base_url();?>landlords/check_rent">Rent Remmitted</a></li>
              <li><a href="<?php echo base_url();?>landlords/pay_tax">Pay Your Tax</a></li>
               <li><a href="<?php echo base_url();?>landlords/check_requests">Scheduled Views</a></li>

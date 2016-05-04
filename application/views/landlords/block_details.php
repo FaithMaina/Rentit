@@ -6,14 +6,41 @@
             <li><a href="<?php echo base_url();?>landlords/register_block" class="active navbar-inverse">Register new Block</a></li>
             <li><a href="<?php echo base_url();?>landlords/register_caretaker" class="active navbar-inverse">Register Caretaker</a></li>
             <li><a href="<?php echo base_url();?>landlords/check_rent">Rent Remmitted</a></li>
-             <li><a href="<?php echo base_url();?>landlords/pay_tax">Pay Your Tax</a></li>
-              <li><a href="<?php echo base_url();?>landlords/check_requests">Scheduled Views</a></li>
-              <li><a href="<?php echo base_url();?>landlords/sign_out">Logout</a></li>
+            <li><a href="<?php echo base_url();?>landlords/pay_tax">Pay Your Tax</a></li>
+            <li><a href="<?php echo base_url();?>landlords/check_requests">Scheduled Views</a></li>
+            <li><a href="<?php echo base_url();?>landlords/sign_out">Logout</a></li>
           </ul>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Block's Details</h1>
+        <div class="text-center" id="chart-container"></div>
+        
+        <div class="text-center">
+          <form method="POST" id="rentchart">
+            <input type="hidden" value="<?php echo $block_details[0]['block_name'];?>" name="blockname">
+            <div class="col-xs-12 col-sm-3">
+              <strong>From:</strong> <input id="from" type="date" class="form-control" name="from">
+              
+            </div>
+
+            <div class="col-xs-12 col-sm-3">
+              <strong>To:</strong> <input id="to" type="date" class="form-control" name="to">
+              
+            </div>
+
+            <div class="col-xs-12 col-sm-3">
+              <br/>
+              <button id="generate" class="btn btn-success btn-info btn-sm btn" type="submit">Generate Rent Report</button>
+            </div>
+          </form>
+        </div>
+        
+          <div class="row">
+              <div class="col-sm-12 text-center">
+                <h3><?php echo $block_details[0]['block_name']; ?> Details</h3>
+              </div>
+          </div>
+        
 
           <div class="table-responsive">
             <table class="table table-striped">
@@ -46,24 +73,6 @@
                   <?php endforeach; ?>
               </tbody>
             </table>
-            
-          <?php echo form_open('charts/block_rent_details'); ?>
-                <td><input type="hidden" value="<?php echo $block_details[0]['block_name'];?>" name="block_name"></td>
-            <div class="col-xs-12 col-sm-3">
-              <strong>From:</strong> <input type="date" class="form-control" name="from">
-              
-            </div>
-
-            <div class="col-xs-12 col-sm-3">
-              <strong>To:</strong> <input type="date" class="form-control" name="to">
-              
-            </div>
-
-            <div class="col-xs-12 col-sm-3">
-              <br/>
-              <button class="btn btn-success btn-info btn-sm btn" type="submit">Generate Rent Report</button>
-            </div>
-          <?php echo form_close(); ?>
           </div>
         </div>
       </div>
@@ -150,5 +159,8 @@
                       </div>
                     </div>
                   </div>
-<script>
-</script>
+<script src="<?php echo base_url();?>js/jquery-2.2.1.min.js"></script>
+<script src="<?php echo base_url();?>js/fusioncharts.js"></script>
+<script src="<?php echo base_url();?>js/fusioncharts.charts.js"></script>
+<script src="<?php echo base_url();?>js/themes/fusioncharts.theme.zune.js"></script>
+<script src="<?php echo base_url();?>js/app.js"></script>

@@ -12,7 +12,7 @@
 |
 | If this is not set then CodeIgniter will guess the protocol, domain and
 | path to your installation.
-|
+|192.168.43.196
 */
 $config['base_url']	= 'http://192.168.43.196/Rentit/';
 

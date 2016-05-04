@@ -24,7 +24,7 @@ class Charts extends CI_Controller {
 
 		$to = $this->input->post('to');
 		$from = $this->input->post('from');
-		$block = $this->input->post('block_name');
+		$block = $this->input->post('blockname');
 
 		$rent_details = $this->charts_model->block_rent_details($block,$from, $to);
 
@@ -36,9 +36,11 @@ class Charts extends CI_Controller {
             $jsonArrayItem['value'] = utf8_encode($row['expected_rent_sum']);
             array_push($jsonArray, $jsonArrayItem);
         }
+        array_push($jsonArray, $jsonArrayItem);
 
-        header('Content-type: application/json');
-        echo "\n";echo json_encode($jsonArray); 
+        return $this->output->set_content_type('application/json')
+        		->set_status_header(200)
+        		->set_output(json_encode($jsonArray));
 	}
 
 	

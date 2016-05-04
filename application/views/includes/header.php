@@ -13,14 +13,14 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/invoice.css">
      <!-- Custom styles for this template -->
-   <!-- <link href="<?php echo base_url(); ?>/css/cover.css" rel="stylesheet">-->
+    <!-- <link href="<?php echo base_url(); ?>/css/cover.css" rel="stylesheet">-->
     <link href="<?php echo base_url(); ?>/css/dashboard.css" rel="stylesheet">
-
+    <script src="<?php echo base_url();?>css/js/jquery.min.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
    <!-- <script src="<?php echo base_url();?>css/assets/js/ie-emulation-modes-warning.js"></script>
-
+  
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="<?php echo base_url();?>css/assets/js/ie10-viewport-bug-workaround.js"></script>
 

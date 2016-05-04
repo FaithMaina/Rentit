@@ -1,5 +1,4 @@
-  
-    <div class="site-wrapper text-center">
+   <div class="site-wrapper text-center" style="background-color:gray;background-image:url(<?php echo base_url();?>images/homebg2.jpg)">
 
       <div class="site-wrapper-inner">
 
@@ -16,9 +15,6 @@
 
           <div class="inner cover">
             <h1 class="cover-heading">RENTIT AGENCY.</h1>
-            <p class="lead">
-              
-            </p>
             <p class="lead">
               <a href="<?php echo base_url();?>landlords/login" class="btn btn-lg btn-default">Landlords' Portal</a><br/><br/>
               <a href="<?php echo base_url();?>tenants/login" class="btn btn-lg btn-default">Tenants' Portal</a><br/><br/>

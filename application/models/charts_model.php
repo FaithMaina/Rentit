@@ -5,9 +5,8 @@ class Charts_model extends CI_Model {
 	public function get_data(){
 		$query = "SELECT * FROM blocks ";
         $units = $this->db->query($query)->result_array();
+        
         $jsonArray = array();
-
-       
         	foreach ($units as $key => $row)  {
         		$jsonArrayItem = array();
         		$jsonArrayItem['label'] = $row['block_name'];  
